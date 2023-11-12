@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import './App.css'
 
+type ItemId = `${string}-${string}-${string}-${string}-${string}`
+
 type Item = {
-  id: `${string}-${string}-${string}-${string}-${string}`
+  id: ItemId
   text: string
 }
 
@@ -32,9 +34,14 @@ function App() {
     if (!(input instanceof HTMLInputElement) || input === null) return
 
     const newItem = { id: crypto.randomUUID(), text: input.value }
+
     setItems(prevItem => [...prevItem, newItem])
+
     input.value = ''
   }
+
+  const handleDelete = (id: ItemId) => () =>
+    setItems(prevItem => prevItem.filter(prevItem => prevItem.id !== id))
 
   return (
     <main>
@@ -58,7 +65,10 @@ function App() {
         <h2>Lista de elementos</h2>
         <ul>
           {items.map(item => (
-            <li key={item.id}>{item.text}</li>
+            <li key={item.id}>
+              {item.text}
+              <button onClick={handleDelete(item.id)}>Eliminar</button>
+            </li>
           ))}
         </ul>
       </section>
