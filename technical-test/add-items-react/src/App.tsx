@@ -64,12 +64,16 @@ function App() {
       <section>
         <h2>Lista de elementos</h2>
         <ul>
-          {items.map(item => (
-            <li key={item.id}>
-              {item.text}
-              <button onClick={handleDelete(item.id)}>Eliminar</button>
-            </li>
-          ))}
+          {items.length === 0 ? (
+            <li>No hay elementos</li>
+          ) : (
+            items.map(item => (
+              <li key={item.id}>
+                {item.text}
+                <button onClick={handleDelete(item.id)}>Eliminar</button>
+              </li>
+            ))
+          )}
         </ul>
       </section>
     </main>
